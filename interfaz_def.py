@@ -36,7 +36,6 @@ def obtener():
 	else : 
 		parametro = " "
 	#añadimos los botones de get, set y getnext
-	parametro = '1.3.6.1.2.1.1.3.0' #sysUptime
 
 	bottomframe = Frame(app)
 	bottomframe.pack(side=BOTTOM)
