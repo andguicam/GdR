@@ -9,7 +9,7 @@ from funciones.get_next_handler import get_next_handler
 
 #funcion para iniciar session
 #creamos una session de snmp
-session = Session(hostname='192.168.0.168', community='public', version=2)
+session = Session(hostname='localhost', community='public', version=2)
 
 
 #creamos la pestaña principal
