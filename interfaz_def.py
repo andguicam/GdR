@@ -7,10 +7,9 @@ from funciones.get_handler import get_handler
 from funciones.set_handler import set_handler
 from funciones.get_next_handler import get_next_handler
 
-
 #funcion para iniciar session
 #creamos una session de snmp
-session = Session(hostname='localhost', community='public', version=2)
+session = Session(hostname='192.168.0.168', community='public', version=2)
 
 
 #creamos la pestaña principal
@@ -37,18 +36,30 @@ def obtener():
 	else : 
 		parametro = " "
 	#añadimos los botones de get, set y getnext
+	parametro = '1.3.6.1.2.1.1.3.0' #sysUptime
+
 	bottomframe = Frame(app)
 	bottomframe.pack(side=BOTTOM)
-	button_set= Button(app, text="Set", command = lambda:set_handler(session,parametro,campo_respuesta))
-	button_get=Button(app, text="Get", command = lambda:get_handler(session, parametro,campo_respuesta))
-	button_getNext=Button(app, text="Get next", command = lambda:get_next_handler(session,parametro,campo_respuesta))
+	button_set= Button(app, text="Set", command = lambda:set_handler(session,parametro,campo_respuesta,estado_checkbox))
+	button_get=Button(app, text="Get", command = lambda:get_handler(session, parametro,campo_respuesta,estado_checkbox))
+	button_getNext=Button(app, text="Get next", command = lambda:get_next_handler(session,parametro,campo_respuesta,estado_checkbox))
 	button_set.place(x=200, y=450)
 	button_get.place(x=250, y =450)
 	button_getNext.place(x=300, y =450)
 
+
 	campo_respuesta = Label(app, text="Respuesta de la operación:")
-	campo_respuesta.place(x=0, y=500)
+	campo_respuesta.place(x=0, y=525)
+
+	#Creo el checkbox para hacer seleccionar si la operacion se realiza en el agente proporcionado o en la
+	#lista de de agentes que se le pasa
+
+	estado_checkbox=BooleanVar()
+	agentes_checkbox=Checkbutton(app,text="Usar lista de agentes",variable=estado_checkbox)
+	agentes_checkbox.place(x=0,y=480)
+
 	
+
 Button (app, text="Obtener", command=obtener).pack()
 
 
