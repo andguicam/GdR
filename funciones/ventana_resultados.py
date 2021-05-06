@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import ttk
-def ventana_resultados(lista,ip):
+def ventana_resultados(lista):
     ventana=Tk()
     ventana.title("Respuesta de la operación")
     ventana.geometry("600x200")
@@ -25,9 +25,10 @@ def ventana_resultados(lista,ip):
     for elemento in lista:
         oid=elemento[0]
         valor=elemento[1]
+        ip=elemento[2]
         if valor=="Error en la petición":
-            Label(second_frame,text="Respuesta de {0}: Error en la petición".format(ip),bg="red3").grid(row=i,column=0,pady=10,padx=10)
+            Label(second_frame,text="Respuesta de {0}: Error en la petición".format(ip),bg="red3").grid(row=i,column=0,padx=10)
             i+=1
         else:
-            Label(second_frame,text="Respuesta de {0}: {1}: '{2}'".format(ip,oid,valor),bg="SpringGreen2").grid(row=i,column=0,pady=10,padx=10)
+            Label(second_frame,text="Respuesta de {0}: {1}: '{2}'".format(ip,oid,valor),bg="SpringGreen2").grid(row=i,column=0,padx=10)
             i+=1

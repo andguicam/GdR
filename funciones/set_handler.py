@@ -30,10 +30,10 @@ def peticion_set(sesion, oid, etiquetaRespuesta,valor,ventana,estado_checkbox):
             agentes = leer_agentes()
             for agente in agentes:
                 ip = agente[0]
-                comunidad = agente[1]
+                comunidad = agente[1].replace("\n", "")
                 lista.append(peticion_set_checkbox(ip, comunidad, oid,valor))
             #imprimimos los resultados en una ventana aparte
-            ventana_resultados(lista, ip)
+            ventana_resultados(lista)
 
     else:
         #Comprobamos que se ha pasado un OID
@@ -67,6 +67,6 @@ def peticion_set_checkbox(ip, comunidad, oid,valor):
         datos = list(set_response.items())
         oid = datos[0][0]
         valor = datos[0][1]
-        return (oid,valor)
+        return (oid,valor,ip)
     except:
-        return (oid, "Error en la petición")
+        return (oid, "Error en la petición",ip)
