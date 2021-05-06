@@ -6,6 +6,7 @@ from funciones.cargar_mibs import *
 from funciones.get_handler import get_handler
 from funciones.set_handler import set_handler
 from funciones.get_next_handler import get_next_handler
+from funciones.cargar_mibs import *
 
 #funcion para iniciar session
 #creamos una session de snmp
@@ -16,25 +17,31 @@ session = Session(hostname='localhost', community='public', version=2)
 app = Tk() 
 app.geometry('600x600')
 app.title("Mib-browser")
-
+parametro = " "
 #Seleeciones de mibs disponibles
-tabla_mibs=["SNMP-V2","IF-MIB" , "IP-MIB", "HOST-RESOURCES-MIB"]
+tabla_mibs=["SNMPv2-MIB","IF-MIB","IP-MIB", "HOST-RESOURCES-MIB"]
 value_inside = StringVar(app)
 value_inside.set("Selecciona la mib")
 mibs_menu = OptionMenu (app, value_inside, *tabla_mibs).pack()
 def obtener():
 	Label(app, text="Hemos seleccionado la mib: ").pack()
 	Label(app, text=value_inside.get()).pack()
-	if (value_inside.get() == "SNMP-V2"):
-		system = system_mib()
+	if (value_inside.get() == "SNMPv2-MIB"):
+		descr_table = obtener_mib("SNMPv2-MIB")
 		#cargamos los valores
 		sys_value = StringVar(app)
 		sys_value.set("Selecciona un objeto")
-		sys_menu = OptionMenu (app, sys_value, *system).pack()
-		#valor que se pasa a las funciones de los botones
-		parametro = sys_value.get()
+		oid = obtener_oid("sysDescr")
+		sys_menu = OptionMenu (app, sys_value, *descr_table).pack()
+		if (sys_value.get()!="Selecciona un objeto"):
+		#buscamos que elemento hemos pulsado para enviar su oid a las funciones get y set
+		parametro = obtener_oid(sys_value.get(), "SNMPv2-MIB")
+			
+		
 	else : 
 		parametro = " "
+	Button (app, text="Obtener", command=obtener).pack()
+
 	#añadimos los botones de get, set y getnext
 
 	bottomframe = Frame(app)
@@ -65,3 +72,4 @@ Button (app, text="Obtener", command=obtener).pack()
 
 
 app.mainloop()
+
