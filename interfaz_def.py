@@ -59,7 +59,6 @@ def obtener():
 	agentes_checkbox.place(x=0,y=480)
 
 	
-
 Button (app, text="Obtener", command=obtener).pack()
 
 
