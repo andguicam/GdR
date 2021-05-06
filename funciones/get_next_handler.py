@@ -13,10 +13,10 @@ def get_next_handler(sesion,oid,etiquetaRespuesta,estado_checkbox):
             agentes = leer_agentes()
             for agente in agentes:
                 ip = agente[0]
-                comunidad = agente[1]
+                comunidad = agente[1].replace("\n", "")
                 lista.append(peticion_get_next_checkbox(ip, comunidad, oid))
             #imprimimos los resultados en una ventana aparte
-            ventana_resultados(lista, ip)
+            ventana_resultados(lista)
 
     else:
         #Comprobamos que se ha pasado un OID
@@ -39,6 +39,6 @@ def peticion_get_next_checkbox(ip, comunidad, oid):
     try:
         sesion = Session(hostname=ip, community=comunidad, version=2)
         get_response_checkbox = sesion.get_next(oid)
-        return(get_response_checkbox.oid, get_response_checkbox.value)
+        return(get_response_checkbox.oid, get_response_checkbox.value,ip)
     except:
-        return (oid, "Error en la petición")
+        return (oid, "Error en la petición",ip)
