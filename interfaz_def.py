@@ -1,8 +1,7 @@
 from tkinter import *
 import sys
-from funciones.get_handler import *
 from easysnmp import Session
-from funciones.cargar_mibs import *
+from funciones.get_handler import *
 from funciones.get_handler import get_handler
 from funciones.set_handler import set_handler
 from funciones.get_next_handler import get_next_handler
@@ -31,15 +30,15 @@ def obtener():
 		#cargamos los valores
 		sys_value = StringVar(app)
 		sys_value.set("Selecciona un objeto")
-		oid = obtener_oid("sysDescr")
 		sys_menu = OptionMenu (app, sys_value, *descr_table).pack()
 		if (sys_value.get()!="Selecciona un objeto"):
 		#buscamos que elemento hemos pulsado para enviar su oid a las funciones get y set
-		parametro = obtener_oid(sys_value.get(), "SNMPv2-MIB")
-			
+			parametro = obtener_oid(sys_value.get(), "SNMPv2-MIB")
 		
-	else : 
-		parametro = " "
+		else : 
+			parametro = " "
+
+	#Boton que me lleva al menu de las mibs 
 	Button (app, text="Obtener", command=obtener).pack()
 
 	#añadimos los botones de get, set y getnext
