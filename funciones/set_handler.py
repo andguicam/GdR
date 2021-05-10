@@ -5,12 +5,9 @@ from funciones.quicksnmp import set
 from funciones.leer_agentes import leer_agentes
 from funciones.ventana_resultados import ventana_resultados
 from easysnmp import Session
-from funciones.historial import historial
-from funciones.escribir_agentes import escribir_agentes
 #Recibe como parámetro la sesión y el OID (y la ventana), y actualiza la ventana con la respuesta
 
-
-def set_handler(sesion, oid, etiquetaRespuesta, estado_checkbox, estado_checkbox_exportar):
+def set_handler(sesion,oid,etiquetaRespuesta,estado_checkbox):
 
     #Creamos una ventana con un campo para pedir el valor a introducir
 
@@ -19,27 +16,24 @@ def set_handler(sesion, oid, etiquetaRespuesta, estado_checkbox, estado_checkbox
     ventana.title("Introduzca un valor")
     campoTexto=tk.Entry(ventana)
     campoTexto.pack()
-    tk.Button(ventana,text="OK",command=lambda:peticion_set(sesion, oid, etiquetaRespuesta,campoTexto.get(),ventana,estado_checkbox,estado_checkbox_exportar)).pack()
+    tk.Button(ventana,text="OK",command=lambda:peticion_set(sesion, oid, etiquetaRespuesta,campoTexto.get(),ventana,estado_checkbox)).pack()
 
 
 
-def peticion_set(sesion, oid, etiquetaRespuesta,valor,ventana,estado_checkbox,estado_checkbox_exportar):
-    lista_parametro=[]
+def peticion_set(sesion, oid, etiquetaRespuesta,valor,ventana,estado_checkbox):
+
 
     if estado_checkbox.get():
-        #hay que hacer varias peticiones. Los resultados se devolverán en una lista (de tuplas)
-        lista = []
-        ventana.destroy()
-        agentes = leer_agentes()
-        for agente in agentes:
-            ip = agente[0]
-            comunidad = agente[1]
-            lista.append(peticion_set_checkbox(ip, comunidad, oid,valor))
-        #imprimimos los resultados en una ventana aparte
-        # Ventana resultados ya imprime la impresion en el archivo de log
-        ventana_resultados(lista, "SET")
-        if estado_checkbox_exportar.get():
-            escribir_agentes(lista, oid)
+            #hay que hacer varias peticiones. Los resultados se devolverán en una lista (de tuplas)
+            lista = []
+            ventana.destroy()
+            agentes = leer_agentes()
+            for agente in agentes:
+                ip = agente[0]
+                comunidad = agente[1].replace("\n", "")
+                lista.append(peticion_set_checkbox(ip, comunidad, oid,valor))
+            #imprimimos los resultados en una ventana aparte
+            ventana_resultados(lista)
 
     else:
         #Comprobamos que se ha pasado un OID
@@ -58,8 +52,6 @@ def peticion_set(sesion, oid, etiquetaRespuesta,valor,ventana,estado_checkbox,es
                 #Actualizamos la etiqueta referente al campo de respuestas para mostrar el resultado de la operacion
                 etiquetaRespuesta.config(
                     text="Respuesta de {0}: '{1}'".format(oid, valor), bg="SpringGreen2")
-                lista_parametro.append((oid, valor, sesion.hostname))
-                historial(lista_parametro, "SET")
             except:
                 #En caso de excepcion significa que no se ha encontrado el OID solicitado
                 etiquetaRespuesta.config(
