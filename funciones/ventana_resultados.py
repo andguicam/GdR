@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk
-def ventana_resultados(lista):
+from funciones.historial import historial
+def ventana_resultados(lista,tipo_peticion):
     ventana=Tk()
     ventana.title("Respuesta de la operación")
     ventana.geometry("600x200")
@@ -32,3 +33,5 @@ def ventana_resultados(lista):
         else:
             Label(second_frame,text="Respuesta de {0}: {1}: '{2}'".format(ip,oid,valor),bg="SpringGreen2").grid(row=i,column=0,padx=10)
             i+=1
+    
+    historial(lista,tipo_peticion)
