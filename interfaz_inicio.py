@@ -10,11 +10,6 @@ def clear(ventana):
 			widgets.destroy()
 
 def inicio_session(host, community, ventana,app):
-	# if estado_checkbox.get():
-	# 	clear(ventana)
-	# 	Label(ventana, text="Lista de agentes", fg="blue", font=("Arial", 12)).grid(row=0, column= 1)
-	# 	interfaz_botones(app, None, estado_checkbox)
-	# else: 
 	global estado_checkbox
 	try:
 		session = easysnmp.Session(hostname= host.get(), community=community.get(), version=2)	
@@ -48,10 +43,6 @@ community_entry= Entry (inicio, textvariable=community_var).grid(row=2, column=2
 #TODO: Esto es una chapuza que se me ha ocurrido para solucionarlo de manera temporal
 #y que no se descuadre todo
 Label(inicio,text="                                         ").grid(row=0,column=3)
-
-# estado_checkbox=BooleanVar()
-# agentes_checkbox=Checkbutton(inicio,text="Usar lista de agentes",variable=estado_checkbox)
-# agentes_checkbox.grid(row= 3, column=3)
 
 inicio_boton= Button(inicio, text="Iniciar session", command=lambda: inicio_session(host_var, community_var, inicio, app)).grid(row= 6, column=2)
 
