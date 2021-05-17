@@ -4,6 +4,8 @@ from funciones.get_handler import *
 from funciones.get_handler import get_handler
 from funciones.set_handler import set_handler
 from funciones.get_next_handler import get_next_handler
+from funciones.tabla_handler import tabla_handler
+# from funciones.ventana_traps import ventana_traps
 
 def interfaz_botones(app, session):	
 	if (session !=None):
@@ -23,9 +25,15 @@ def interfaz_botones(app, session):
 		button_set= Button(app, text="Set", command = lambda:set_handler(session,oid_var.get(),campo_respuesta,estado_checkbox,estado_checkbox_exportar))
 		button_get=Button(app, text="Get", command = lambda:get_handler(session,oid_var.get(),campo_respuesta,estado_checkbox,estado_checkbox_exportar))
 		button_getNext=Button(app, text="Get next", command = lambda:get_next_handler(session,oid_var.get(),campo_respuesta,estado_checkbox,estado_checkbox_exportar))
+		button_getTable=Button(app,text="Tabla", command=lambda:tabla_handler(session,oid_var.get(),campo_respuesta,estado_checkbox_exportar))
+		# button_traps = Button(app, text="Trap", command=lambda: ventana_traps())
+
 		button_set.place(x=220, y=200)
 		button_get.place(x=270, y =200)
 		button_getNext.place(x=320, y =200)
+		button_getTable.place(x=404,y=200)
+		# button_traps.place(x=480,y=200)
+
 		Label_respuesta = Label(app, text="Respuesta de la operación:")
 		Label_respuesta.place(x=50, y=300)
 		campo_respuesta = Label(app, text=" ")
