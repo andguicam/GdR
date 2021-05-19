@@ -15,8 +15,6 @@ def set_handler(sesion, oid, etiquetaRespuesta, estado_checkbox, estado_checkbox
 
     #Creamos una ventana con un campo para pedir el valor a introducir
     #traducimos el oid si este es no numerico
-    if (type(oid)==str):
-         oid = traducir_direcciones(oid)
     ventana=tk.Tk()
     ventana.geometry("300x100")
     ventana.title("Introduzca un valor")
