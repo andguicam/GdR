@@ -1,48 +1,53 @@
+from funciones.tabla_handler import tabla_handler
 from tkinter import *
 import sys
+from types import ClassMethodDescriptorType
 from funciones.get_handler import *
 from funciones.get_handler import get_handler
 from funciones.set_handler import set_handler
 from funciones.get_next_handler import get_next_handler
-from funciones.tabla_handler import tabla_handler
-# from funciones.ventana_traps import ventana_traps
+from funciones.limpiar import limpiar
+from funciones.presentar_tabla import presentar_tabla
+from funciones.traducir_direcciones import presentar_direcciones
+
 
 def interfaz_botones(app, session):	
-	if (session !=None):
 		oid_var= StringVar()
-		Label (app, text="Introduce el oid: " ).place(x=150, y =100)
-		oid_entry= Entry (app, textvariable=oid_var).place(x=258, y =100)
-
-
-		estado_checkbox=BooleanVar()
-		agentes_checkbox=Checkbutton(app,text="Usar lista de agentes",variable=estado_checkbox)
-		agentes_checkbox.place(x=145,y=30)
-		estado_checkbox_exportar=BooleanVar()
-		exportar_checkbox=Checkbutton(app,text="Exportar resultado operacion",variable=estado_checkbox_exportar)
-		exportar_checkbox.place(x=145,y=50)
-
-
+		Label (app, text="Introduce el oid: " ).place(x=30, y =50)
+		oid_entry= Entry (app, textvariable=oid_var)
+		oid_entry.place(x=175, y =50)
 		button_set= Button(app, text="Set", command = lambda:set_handler(session,oid_var.get(),campo_respuesta,estado_checkbox,estado_checkbox_exportar))
 		button_get=Button(app, text="Get", command = lambda:get_handler(session,oid_var.get(),campo_respuesta,estado_checkbox,estado_checkbox_exportar))
 		button_getNext=Button(app, text="Get next", command = lambda:get_next_handler(session,oid_var.get(),campo_respuesta,estado_checkbox,estado_checkbox_exportar))
-		button_getTable=Button(app,text="Tabla", command=lambda:tabla_handler(session,oid_var.get(),campo_respuesta,estado_checkbox_exportar))
-		# button_traps = Button(app, text="Trap", command=lambda: ventana_traps())
+		button_gettabla = Button (app, text="Tablas", command = lambda: presentar_tabla(session, oid_var.get(), app,campo_respuesta,estado_checkbox_exportar))
+		button_traducir = Button(app,text="Traducir",command = lambda: presentar_direcciones (oid_var.get(), campo_respuesta))
+		button_set.place(x=30, y=100)
+		button_get.place(x=90, y =100)
+		button_getNext.place(x=150, y =100)
+		button_gettabla.place(x=240, y=100)
+		button_traducir.place(x=320, y =100)
 
-		button_set.place(x=220, y=200)
-		button_get.place(x=270, y =200)
-		button_getNext.place(x=320, y =200)
-		button_getTable.place(x=404,y=200)
-		# button_traps.place(x=480,y=200)
+		estado_checkbox=BooleanVar()
+		agentes_checkbox=Checkbutton(app,text="Usar lista de agentes",variable=estado_checkbox)
+		agentes_checkbox.place(x=30,y=150)
+		estado_checkbox_exportar=BooleanVar()
+		exportar_checkbox=Checkbutton(app,text="Exportar resultado de la operación",variable=estado_checkbox_exportar)
+		exportar_checkbox.place(x=30,y=175)
 
 		Label_respuesta = Label(app, text="Respuesta de la operación:")
-		Label_respuesta.place(x=50, y=300)
-		campo_respuesta = Label(app, text=" ")
-		campo_respuesta.place(x=50, y =350)
-		return estado_checkbox
-	else: 
-		button_set= Button(app, text="Set", command = lambda:set_handler(session,None,None,estado_checkbox))
-		button_get=Button(app, text="Get", command = lambda:get_handler(session,None,None,estado_checkbox))
-		button_getNext=Button(app, text="Get next", command = lambda:get_next_handler(session,None,None,estado_checkbox))
-		button_set.place(x=220, y=200)
-		button_get.place(x=270, y =200)
-		button_getNext.place(x=320, y =200)
+		Label_respuesta.place(x=30, y=250)
+		campo_respuesta = Label(app, text="")
+		campo_respuesta.place(x=30, y =300)
+
+		
+
+		#boton de limpieza
+		button_limpiar = Button(app, text="Limpiar", bg='red', command = lambda: limpiar(oid_entry, campo_respuesta))
+		button_limpiar.place(x=400, y = 50)
+
+		
+
+
+		return None
+
+
