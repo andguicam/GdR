@@ -1,6 +1,7 @@
 import easysnmp
 from pysnmp import hlapi
 import tkinter as tk
+from funciones.traducir_direcciones import traducir_direcciones
 from funciones.quicksnmp import set
 from funciones.leer_agentes import leer_agentes
 from funciones.ventana_resultados import ventana_resultados
@@ -13,7 +14,9 @@ from funciones.escribir_agentes import escribir_agentes
 def set_handler(sesion, oid, etiquetaRespuesta, estado_checkbox, estado_checkbox_exportar):
 
     #Creamos una ventana con un campo para pedir el valor a introducir
-
+    #traducimos el oid si este es no numerico
+    if (type(oid)==str):
+         oid = traducir_direcciones(oid)
     ventana=tk.Tk()
     ventana.geometry("300x100")
     ventana.title("Introduzca un valor")
@@ -45,27 +48,28 @@ def peticion_set(sesion, oid, etiquetaRespuesta,valor,ventana,estado_checkbox,es
         #Comprobamos que se ha pasado un OID
         if oid:
             try:
+               
                 #Obtengo el valor que ha introducido el usuario y elimino la ventana
                 ventana.destroy()
                 #Realizo peticion y obtengo los valores
                 ip = sesion.hostname
                 comunidad = sesion.community
                 set_response = set(ip, {str(oid): str(valor)},
-                                hlapi.CommunityData(comunidad))
+                                    hlapi.CommunityData(comunidad))
                 datos = list(set_response.items())
                 oid = datos[0][0]
                 valor = datos[0][1]
-                #Actualizamos la etiqueta referente al campo de respuestas para mostrar el resultado de la operacion
+                    #Actualizamos la etiqueta referente al campo de respuestas para mostrar el resultado de la operacion
                 etiquetaRespuesta.config(
-                    text="Respuesta de {0}: '{1}'".format(oid, valor), bg="SpringGreen2")
+                    text="Respuesta de {0}: '{1}'".format(oid, valor), fg="SpringGreen2")
                 lista_parametro.append((oid, valor, sesion.hostname))
                 historial(lista_parametro, "SET")
             except:
-                #En caso de excepcion significa que no se ha encontrado el OID solicitado
+                    #En caso de excepcion significa que no se ha encontrado el OID solicitado
                 etiquetaRespuesta.config(
-                    text="El OID introducido no se ha encontrado", bg="red3")
+                text="El OID introducido no se ha encontrado", fg="red3")
         else:
-            print("Tienes que introducir un OID")
+            etiquetaRespuesta.config(text="Tiene que introducir un oid", fg="red")
 
 
 def peticion_set_checkbox(ip, comunidad, oid,valor):

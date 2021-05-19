@@ -21,22 +21,26 @@ def get_handler(sesion,oid,etiquetaRespuesta,estado_checkbox,estado_checkbox_exp
             escribir_agentes(lista, oid)
 
     else:
+        print (type(oid))
         #Comprobamos que se ha pasado un OID
         if oid:
             try:
+                #añadimos el .0 directamente, podemos incluir valores no numericos
                 #Realizo peticion y obtengo los valores
-                get_response = sesion.get(oid)
+                oid = oid.rstrip('.0')
+                get_response = sesion.get((oid, '0'))
                 oid=get_response.oid
                 valor=get_response.value
                 #Actualizamos la etiqueta referente al campo de respuestas para mostrar el resultado de la operacion
-                etiquetaRespuesta.config(text="Respuesta de {0}: '{1}'".format(oid,valor),bg="SpringGreen2")
+                etiquetaRespuesta.config(text="Respuesta de {0}: '{1}'".format(oid,valor),fg="SpringGreen2")
                 lista_parametro.append((oid, valor, sesion.hostname))
                 historial(lista_parametro,"GET")
             except:
                 #En caso de excepcion significa que no se ha encontrado el OID solicitado
-                etiquetaRespuesta.config(text="El OID introducido no se ha encontrado", bg="red3")
+                etiquetaRespuesta.config(text="El OID introducido no se ha encontrado", fg="red3")
+        
         else:
-            print("Tienes que introducir un OID")
+            etiquetaRespuesta.config(text="Tiene que introducir un oid", fg="red")
 
 def peticion_get_checkbox(ip,comunidad,oid):
     try:

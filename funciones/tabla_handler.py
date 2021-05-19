@@ -1,8 +1,9 @@
+from funciones.presentar_tabla import presentar_tabla
 from funciones.snmptable import snmptable
 from funciones.tabla_a_lista import tabla_a_lista
-from funciones.ventana_tablas import ventana_tablas
 from funciones.historial import historial
 from funciones.exportar_tabla import exportar_tabla
+from funciones.presentar_tabla import presentar_tabla
 def tabla_handler(session,oid,campo_respuesta,estado_checkbox_exportar):
     ip=session.hostname
     comunidad=session.community
@@ -14,13 +15,13 @@ def tabla_handler(session,oid,campo_respuesta,estado_checkbox_exportar):
 
     if res == "OID invalido. No hay tabla asociada":
         #La tabla no existe. Informamos de ello
-        campo_respuesta.config(text="El OID introducido no es una tabla", bg="red3")
+        campo_respuesta.config(text="El OID introducido no es una tabla", fg="red3")
         #Registramos en el historial
         lista_parametro.append((oid, "con errores", ip))
         historial(lista_parametro, tipo_peticion)
     else:
         campo_respuesta.config(
-            text="Exito en la operacion.", bg="SpringGreen2")
+            text="Exito en la operacion.", fg="SpringGreen2")
         #La tabla existe y seguimos con el proceso
         lista=tabla_a_lista(ip, comunidad, oid, res)
         #Registramos en el historial
@@ -30,5 +31,6 @@ def tabla_handler(session,oid,campo_respuesta,estado_checkbox_exportar):
         if estado_checkbox_exportar.get():
             #Si esta marcado exportamos la tabla en formato csv
             exportar_tabla(lista, oid)
-        #Representamos la tabla en una ventana aparte
-        ventana_tablas(lista)
+        #Representamos la tabla en la ventana
+        presentar_tabla(campo_respuesta, lista, oid)
+       

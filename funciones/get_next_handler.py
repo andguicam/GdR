@@ -28,20 +28,23 @@ def get_next_handler(sesion, oid, etiquetaRespuesta, estado_checkbox, estado_che
         #Comprobamos que se ha pasado un OID
         if oid:
             try:
+                #si hemos añadido un cero de mas se lo  quitamos 
+                oid = oid.rstrip('.0')
                 #Realizo peeticion y obtengo los valores
-                get_response = sesion.get_next(oid)
+                get_response = sesion.get_next((oid, '0'))
                 oid=get_response.oid
                 valor=get_response.value
                 #Actualizamos la etiqueta referente al campo de respuestas para mostrar el resultado de la operacion
-                etiquetaRespuesta.config(text="Respuesta de {0}: '{1}'".format(oid,valor),bg="SpringGreen2")
+                etiquetaRespuesta.config(text="Respuesta de {0}: '{1}'".format(oid,valor),fg="SpringGreen2")
                 lista_parametro.append((oid, valor, sesion.hostname))
                 historial(lista_parametro, "GET NEXT")
             except:
                 #En caso de excepcion significa que no se ha encontrado el OID solicitado
                 #Si ocurre esto, no se graba en el historial de log
-                etiquetaRespuesta.config(text="El OID introducido no se ha encontrado", bg="red3")
+                etiquetaRespuesta.config(text="El OID introducido no se ha encontrado", fg="red3")
         else:
-            print("Tienes que introducir un OID")
+            #print("Tienes que introducir un OID")
+            etiquetaRespuesta.config(text="Tiene que introducir un oid", fg="red")
 
 
 def peticion_get_next_checkbox(ip, comunidad, oid):
