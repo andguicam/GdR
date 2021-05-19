@@ -1,4 +1,9 @@
+from os import error
+from funciones.comprobar_version import comprobar_version
 import subprocess
+from funciones.comprobar_version import comprobar_version
+from funciones.comprobar_error import comprobar_error
+
 
 def snmptable(ip,comunidad,oid):
     linea=3 #Linea donde estan los indices de la tabla
@@ -14,10 +19,11 @@ def snmptable(ip,comunidad,oid):
                                stderr=subprocess.STDOUT)
     
     copia=version.communicate()
-    if copia[0].decode().strip().split()[-1] == '5.9':
+    if comprobar_version() == '5.9':
         out = subprocess.Popen(['snmptable','-v', '1', '-c', comunidad, ip, oid],
                                stdout=subprocess.PIPE,
                                stderr=subprocess.STDOUT)
+        
     else:
         out = subprocess.Popen(['snmptable',ip,oid,'-c',comunidad,'-v','1','-O','a','-m','ALL'],
                             stdout=subprocess.PIPE,
@@ -29,7 +35,10 @@ def snmptable(ip,comunidad,oid):
     for el in lineas:
         l.append(el.decode())
     try:
-        res=" ".join(l[3].split())
+        if comprobar_error(stdout):
+            res=" ".join(l[3].split())
+        else:
+            res = " ".join(l[2].split())
     except:
         #Si tenemos una excepcion es porque no existe tabla para el OID introducido
         return "OID invalido. No hay tabla asociada"
