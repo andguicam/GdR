@@ -1,7 +1,6 @@
 import easysnmp
 from pysnmp import hlapi
 import tkinter as tk
-from funciones.traducir_direcciones import traducir_direcciones
 from funciones.quicksnmp import set
 from funciones.leer_agentes import leer_agentes
 from funciones.ventana_resultados import ventana_resultados
