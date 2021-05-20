@@ -1,6 +1,7 @@
 import easysnmp
 from pysnmp import hlapi
 import tkinter as tk
+from funciones.traducir_direcciones import traducir_direcciones
 from funciones.quicksnmp import set
 from funciones.leer_agentes import leer_agentes
 from funciones.ventana_resultados import ventana_resultados
@@ -14,6 +15,7 @@ def set_handler(sesion, oid, etiquetaRespuesta, estado_checkbox, estado_checkbox
 
     #Creamos una ventana con un campo para pedir el valor a introducir
     #traducimos el oid si este es no numerico
+    
     ventana=tk.Tk()
     ventana.geometry("300x100")
     ventana.title("Introduzca un valor")
@@ -58,7 +60,7 @@ def peticion_set(sesion, oid, etiquetaRespuesta,valor,ventana,estado_checkbox,es
                 valor = datos[0][1]
                     #Actualizamos la etiqueta referente al campo de respuestas para mostrar el resultado de la operacion
                 etiquetaRespuesta.config(
-                    text="Respuesta de {0}: '{1}'".format(oid, valor), fg="SpringGreen2")
+                    text="Respuesta de {0}: '{1}'".format(oid, valor))
                 lista_parametro.append((oid, valor, sesion.hostname))
                 historial(lista_parametro, "SET")
             except:

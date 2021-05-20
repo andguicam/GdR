@@ -35,7 +35,7 @@ def get_next_handler(sesion, oid, etiquetaRespuesta, estado_checkbox, estado_che
                 oid=get_response.oid
                 valor=get_response.value
                 #Actualizamos la etiqueta referente al campo de respuestas para mostrar el resultado de la operacion
-                etiquetaRespuesta.config(text="Respuesta de {0}: '{1}'".format(oid,valor),fg="SpringGreen2")
+                etiquetaRespuesta.config(text="Respuesta de {0}: '{1}'".format(oid,valor))
                 lista_parametro.append((oid, valor, sesion.hostname))
                 historial(lista_parametro, "GET NEXT")
             except:

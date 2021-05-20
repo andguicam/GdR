@@ -14,6 +14,7 @@ def presentar_tabla(session, oid, app,campo_respuesta,estado_checkbox_exportar):
     else:
         #definimos la scroll bar 
         respuesta_frame=Frame(app)
+        respuesta_frame.configure(bg='snow')
         respuesta_frame.pack(side=BOTTOM)
         scroll_x=Scrollbar(respuesta_frame, orient=HORIZONTAL )
         tree = Treeview(respuesta_frame, xscrollcommand=scroll_x.set)
@@ -40,8 +41,9 @@ def presentar_tabla(session, oid, app,campo_respuesta,estado_checkbox_exportar):
         #si esta marcada la casilla exportamos la lista
         if estado_checkbox_exportar.get():
             exportar_tabla(lista, oid)
+            
         #creamos un boton para borrar el frame
-        button_limpiar = Button(respuesta_frame, text="Limpiar tabla",  bg='red', command = lambda: limpiar_frame(respuesta_frame))
+        button_limpiar = Button(respuesta_frame, text="Limpiar tabla", bg='snow',command = lambda: limpiar_frame(respuesta_frame))
         button_limpiar.pack(side=TOP)
 
 
