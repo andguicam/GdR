@@ -1,4 +1,5 @@
 #!/bin/sh
+sudo apt update
 sudo apt install libsnmp-dev snmp-mibs-downloader gcc python-dev  snmp python3 python3-pip python3-tk -y
 pip3 install puresnmp easysnmp pysnmp
 echo "---------------------------------------------------"
