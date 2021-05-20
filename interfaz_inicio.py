@@ -48,7 +48,7 @@ Label (inicio, text="Introduce la community: ",bg='snow').grid(row=2, column=1)
 community_entry= Entry (inicio, textvariable=community_var,bg='snow').grid(row=2, column=2)
 #TODO: Esto es una chapuza que se me ha ocurrido para solucionarlo de manera temporal
 #y que no se descuadre todo
-Label(inicio,text="                                         ",fg='snow').grid(row=0,column=3)
+Label(inicio,text="                                         ",bg='snow').grid(row=0,column=3)
 
 inicio_boton= Button(inicio, text="Iniciar sesión", command=lambda: inicio_session(host_var, community_var, inicio, app),fg='snow').grid(row= 6, column=2)
 
