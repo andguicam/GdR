@@ -13,14 +13,14 @@ from funciones.traducir_direcciones import presentar_direcciones
 
 def interfaz_botones(app, session):	
 		oid_var= StringVar()
-		Label (app, text="Introduce el oid: " ).place(x=30, y =50)
+		Label (app, text="Introduce el oid: " ,bg='snow').place(x=30, y =50)
 		oid_entry= Entry (app, textvariable=oid_var)
 		oid_entry.place(x=175, y =50)
-		button_set= Button(app, text="Set", command = lambda:set_handler(session,oid_var.get(),campo_respuesta,estado_checkbox,estado_checkbox_exportar))
-		button_get=Button(app, text="Get", command = lambda:get_handler(session,oid_var.get(),campo_respuesta,estado_checkbox,estado_checkbox_exportar))
-		button_getNext=Button(app, text="Get next", command = lambda:get_next_handler(session,oid_var.get(),campo_respuesta,estado_checkbox,estado_checkbox_exportar))
-		button_gettabla = Button (app, text="Tablas", command = lambda: presentar_tabla(session, oid_var.get(), app,campo_respuesta,estado_checkbox_exportar))
-		button_traducir = Button(app,text="Traducir",command = lambda: presentar_direcciones (oid_var.get(), campo_respuesta))
+		button_set= Button(app, text="Set",bg='snow', command = lambda:set_handler(session,oid_var.get(),campo_respuesta,estado_checkbox,estado_checkbox_exportar))
+		button_get=Button(app, text="Get", bg='snow',command = lambda:get_handler(session,oid_var.get(),campo_respuesta,estado_checkbox,estado_checkbox_exportar))
+		button_getNext=Button(app, text="Get next", bg='snow',command = lambda:get_next_handler(session,oid_var.get(),campo_respuesta,estado_checkbox,estado_checkbox_exportar))
+		button_gettabla = Button (app, text="Tablas", bg='snow',command = lambda: presentar_tabla(session, oid_var.get(), app,campo_respuesta,estado_checkbox_exportar))
+		button_traducir = Button(app,text="Traducir",bg='snow',command = lambda: presentar_direcciones (oid_var.get(), campo_respuesta))
 		button_set.place(x=30, y=100)
 		button_get.place(x=90, y =100)
 		button_getNext.place(x=150, y =100)
@@ -28,21 +28,21 @@ def interfaz_botones(app, session):
 		button_traducir.place(x=320, y =100)
 
 		estado_checkbox=BooleanVar()
-		agentes_checkbox=Checkbutton(app,text="Usar lista de agentes",variable=estado_checkbox)
+		agentes_checkbox=Checkbutton(app,text="Usar lista de agentes",bg='snow',variable=estado_checkbox)
 		agentes_checkbox.place(x=30,y=150)
 		estado_checkbox_exportar=BooleanVar()
-		exportar_checkbox=Checkbutton(app,text="Exportar resultado de la operación",variable=estado_checkbox_exportar)
+		exportar_checkbox=Checkbutton(app,text="Exportar resultado de la operación",bg='snow',variable=estado_checkbox_exportar)
 		exportar_checkbox.place(x=30,y=175)
 
-		Label_respuesta = Label(app, text="Respuesta de la operación:")
+		Label_respuesta = Label(app, text="Respuesta de la operación:",bg='snow')
 		Label_respuesta.place(x=30, y=250)
-		campo_respuesta = Label(app, text="")
+		campo_respuesta = Label(app, text="",bg='snow')
 		campo_respuesta.place(x=30, y =300)
 
 		
 
 		#boton de limpieza
-		button_limpiar = Button(app, text="Limpiar", bg='red', command = lambda: limpiar(oid_entry, campo_respuesta))
+		button_limpiar = Button(app, text="Limpiar", bg='snow', command = lambda: limpiar(oid_entry, campo_respuesta))
 		button_limpiar.place(x=400, y = 50)
 
 		
