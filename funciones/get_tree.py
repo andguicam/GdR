@@ -11,7 +11,6 @@ def get_tree(session, oid):
     lista = []
 
     if res == "OID invalido. No hay tabla asociada":
-        print("No hay tabla asociada a ese OID")
         lista = None 
     else:
         #La tabla existe y seguimos con el proceso

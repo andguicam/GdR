@@ -51,7 +51,6 @@ def get_next_handler(sesion, oid, etiquetaRespuesta, estado_checkbox, estado_che
                 #Si ocurre esto, no se graba en el historial de log
                 etiquetaRespuesta.config(text="El OID introducido no se ha encontrado", fg="red3")
         else:
-            #print("Tienes que introducir un OID")
             etiquetaRespuesta.config(text="Tiene que introducir un oid", fg="red")
 
 
