@@ -4,7 +4,7 @@ from sys import stderr
 from funciones.comprobar_version import comprobar_version
 from funciones.comprobar_error import comprobar_error
 
-#TODO:Revisar esta funcion
+
 def convertir(lineas):
     l = []  # Contiene la linea con todos los titulos de la tabla
     l_limpia = []
