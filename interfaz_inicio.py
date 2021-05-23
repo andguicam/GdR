@@ -1,9 +1,8 @@
 from tkinter import *
 import sys
 from easysnmp import Session
-from interfaz_botones import * 
 import easysnmp
-
+from funciones.interfaz_botones import *
 estado_checkbox=""
 
 def clear(ventana):
