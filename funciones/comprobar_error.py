@@ -4,8 +4,18 @@ def comprobar_error(stdout):
     #Trabajamos sobre la copia porque stdout es efimero
     copia=stdout
     if isinstance(copia,list):
-        if copia[0].decode().strip().startswith("Bad operator"):
-            return True
+        if isinstance(copia[0],str):
+            #Es una lista de strings
+            if copia[0].startswith("Bad operator"):
+                return True
+            else:
+                return False
+        else:
+            #Es la lista, debemos usar decode
+            if copia[0].decode().strip().startswith("Bad operator"):
+                return True
+            else:
+                return False
     else:
         if copia.decode().strip().startswith("Bad operator"):
             return True
