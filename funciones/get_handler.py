@@ -12,6 +12,15 @@ def get_handler(sesion,oid,etiquetaRespuesta,estado_checkbox,estado_checkbox_exp
         #hay que hacer varias peticiones. Los resultados se devolverán en una lista (de tuplas)
         lista=[]
         agentes=leer_agentes()
+        
+        oid = oid.rstrip('.0')
+        if (bool(re.search(r'\d',oid))!=True):
+            #si no contiene un numero
+            oid = traducir_direcciones(oid)
+        else : 
+            oid += '.0'
+            oid = oid.strip(' ')
+
         for agente in agentes:
             ip=agente[0]
             comunidad=agente[1] #Para eliminar el \n final en caso de que lo haya

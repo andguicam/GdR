@@ -34,6 +34,16 @@ def peticion_set(sesion, oid, etiquetaRespuesta,valor,ventana,estado_checkbox,es
         lista = []
         ventana.destroy()
         agentes = leer_agentes()
+
+        oid = oid.rstrip('.0')
+        if (bool(re.search(r'\d', oid)) != True):
+            #si no contiene un numero
+            oid = traducir_direcciones(oid)
+        else:
+            oid += '.0'
+            oid = oid.strip(' ')
+
+        
         for agente in agentes:
             ip = agente[0]
             comunidad = agente[1]
