@@ -10,14 +10,12 @@ def presentar_tabla(session, oid, app,campo_respuesta,estado_checkbox_exportar):
     #limpiamos el campo de respuesta
     limpiar_campo(campo_respuesta)
     #traducimos a oid numerico si se ha introducido el nombre
-    print(oid)
     oid = oid.rstrip('.0')
     if (bool(re.search(r'\d',oid))!=True):
         #si no contiene un numero
         oid = traducir_direcciones(oid)
     #volvemos a quitar el .0 que se le añade en traducir oid
     oid = oid.rstrip('.0')
-    print(oid)
     #obtenemos la lista 
     lista = get_tree(session, oid)
     if (lista ==None):
