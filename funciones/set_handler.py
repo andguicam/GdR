@@ -68,7 +68,7 @@ def peticion_set(sesion, oid, etiquetaRespuesta,valor,ventana,estado_checkbox,es
                 valor = datos[0][1]
                     #Actualizamos la etiqueta referente al campo de respuestas para mostrar el resultado de la operacion
                 etiquetaRespuesta.config(
-                    text="Respuesta de {0}: '{1}'".format(oid, valor))
+                    text="Respuesta de {0}: '{1}'".format(oid, valor),fg="forest green")
                 lista_parametro.append((oid, valor, sesion.hostname))
                 historial(lista_parametro, "SET")
             except:
