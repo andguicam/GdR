@@ -1,6 +1,7 @@
 import easysnmp
 from pysnmp import hlapi
 import tkinter as tk
+import re
 from funciones.traducir_direcciones import traducir_direcciones
 from funciones.quicksnmp import set
 from funciones.leer_agentes import leer_agentes
@@ -47,10 +48,17 @@ def peticion_set(sesion, oid, etiquetaRespuesta,valor,ventana,estado_checkbox,es
         #Comprobamos que se ha pasado un OID
         if oid:
             try:
-               
+                
                 #Obtengo el valor que ha introducido el usuario y elimino la ventana
                 ventana.destroy()
+                oid = oid.rstrip('.0')
                 #Realizo peticion y obtengo los valores
+                if (bool(re.search(r'\d',oid))!=True):
+                    #si no contiene un numero
+                    oid = traducir_direcciones(oid)
+                else : 
+                    oid += '.0'
+                    oid = oid.strip(' ')
                 ip = sesion.hostname
                 comunidad = sesion.community
                 set_response = set(ip, {str(oid): str(valor)},

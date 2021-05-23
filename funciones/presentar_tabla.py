@@ -1,12 +1,23 @@
 from tkinter import *
+import re
 from tkinter.ttk import Treeview
 from funciones.get_tree import get_tree
 from funciones.limpiar import *
 from funciones.exportar_tabla import exportar_tabla
+from funciones.traducir_direcciones import traducir_direcciones
 
 def presentar_tabla(session, oid, app,campo_respuesta,estado_checkbox_exportar):
     #limpiamos el campo de respuesta
     limpiar_campo(campo_respuesta)
+    #traducimos a oid numerico si se ha introducido el nombre
+    print(oid)
+    oid = oid.rstrip('.0')
+    if (bool(re.search(r'\d',oid))!=True):
+        #si no contiene un numero
+        oid = traducir_direcciones(oid)
+    #volvemos a quitar el .0 que se le añade en traducir oid
+    oid = oid.rstrip('.0')
+    print(oid)
     #obtenemos la lista 
     lista = get_tree(session, oid)
     if (lista ==None):
@@ -41,7 +52,7 @@ def presentar_tabla(session, oid, app,campo_respuesta,estado_checkbox_exportar):
         #si esta marcada la casilla exportamos la lista
         if estado_checkbox_exportar.get():
             exportar_tabla(lista, oid)
-            
+
         #creamos un boton para borrar el frame
         button_limpiar = Button(respuesta_frame, text="Limpiar tabla", bg='snow',command = lambda: limpiar_frame(respuesta_frame))
         button_limpiar.pack(side=TOP)

@@ -1,4 +1,6 @@
 import easysnmp
+import re
+from funciones.traducir_direcciones import traducir_direcciones
 from funciones.leer_agentes import leer_agentes
 from funciones.ventana_resultados import ventana_resultados
 from easysnmp import Session
@@ -31,6 +33,12 @@ def get_next_handler(sesion, oid, etiquetaRespuesta, estado_checkbox, estado_che
                 #si hemos añadido un cero de mas se lo  quitamos 
                 oid = oid.rstrip('.0')
                 #Realizo peeticion y obtengo los valores
+                if (bool(re.search(r'\d',oid))!=True):
+                    #si no contiene un numero
+                    oid = traducir_direcciones(oid)
+                else : 
+                    oid += '.0'
+                    oid = oid.strip(' ')
                 get_response = sesion.get_next((oid, '0'))
                 oid=get_response.oid
                 valor=get_response.value
