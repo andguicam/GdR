@@ -2,6 +2,7 @@ from tkinter import *
 import sys
 from easysnmp import Session
 from interfaz_botones import * 
+import easysnmp
 
 estado_checkbox=""
 
